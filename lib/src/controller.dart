@@ -810,6 +810,16 @@ class MapboxMapController extends ChangeNotifier {
     return MapboxGlPlatform.getInstance(_id).removeLayer(imageLayerId);
   }
 
+  /// Change visibility for layer with id
+  Future<void> setLayerVisibility(String layerId, bool isVisible) {
+    return MapboxGlPlatform.getInstance(_id).setLayerVisibility(layerId, isVisible);
+  }
+
+  /// Get visibility for layer with id
+  Future<void> getLayerVisibility(String layerId) {
+    return MapboxGlPlatform.getInstance(_id).getLayerVisibility(layerId);
+  }
+
   /// Returns the point on the screen that corresponds to a geographical coordinate ([latLng]). The screen location is in screen pixels (not display pixels) relative to the top left of the map (not of the whole screen)
   ///
   /// Note: The resulting x and y coordinates are rounded to [int] on web, on other platforms they may differ very slightly (in the range of about 10^-10) from the actual nearest screen coordinate.

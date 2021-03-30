@@ -15,6 +15,12 @@ dependencies:
       url: https://github.com/tobrun/flutter-mapbox-gl.git
       path: mapbox_gl_web
 
+dependency_overrides:
+  mapbox_gl_platform_interface:
+    path: mapbox_gl_platform_interface
+  mapbox_gl_web:
+    path: mapbox_gl_web
+
 flutter:
   plugin:
     platforms:

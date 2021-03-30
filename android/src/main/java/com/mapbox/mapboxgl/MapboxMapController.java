@@ -66,8 +66,13 @@ import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
 import com.mapbox.mapboxsdk.plugins.localization.LocalizationPlugin;
 import com.mapbox.mapboxsdk.style.expressions.Expression;
+import com.mapbox.mapboxsdk.style.layers.Layer;
 import com.mapbox.mapboxsdk.style.layers.RasterLayer;
 import com.mapbox.mapboxsdk.style.sources.ImageSource;
+
+import static com.mapbox.mapboxsdk.style.layers.Property.NONE;
+import static com.mapbox.mapboxsdk.style.layers.Property.VISIBLE;
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.visibility;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -842,6 +847,29 @@ final class MapboxMapController
           result.error("STYLE IS NULL", "The style is null. Has onStyleLoaded() already been invoked?", null);
         }
         style.removeLayer((String) call.argument("imageLayerId"));
+        result.success(null);
+        break;
+      }
+      case "style#setLayerVisibility": {
+        if (style == null) {
+          result.error("STYLE IS NULL", "The style is null. Has onStyleLoaded() already been invoked?", null);
+        }
+        Layer layer = style.getLayer((String) call.argument("layerId"));
+        if(null != layer) {
+          final boolean isVisible = call.argument("isVisible");
+          layer.setProperties(visibility(isVisible ? VISIBLE : NONE));
+        }
+        result.success(null);
+        break;
+      }
+      case "style#getLayerVisibility": {
+        if (style == null) {
+          result.error("STYLE IS NULL", "The style is null. Has onStyleLoaded() already been invoked?", null);
+        }
+        Layer layer = style.getLayer((String) call.argument("layerId"));
+        if(null != layer) {
+          result.success(VISIBLE.equals(layer.getVisibility().getValue()));
+        }
         result.success(null);
         break;
       }

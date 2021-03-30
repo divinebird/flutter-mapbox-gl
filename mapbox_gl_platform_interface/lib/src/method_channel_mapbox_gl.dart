@@ -591,6 +591,29 @@ class MethodChannelMapboxGl extends MapboxGlPlatform {
   }
   
   @override
+  Future<void> setLayerVisibility(String layerId, bool isVisible) async {
+    try {
+      return await _channel.invokeMethod('style#setLayerVisibility', <String, Object>{
+        'layerId': layerId,
+        'isVisible': isVisible
+      });
+    } on PlatformException catch (e) {
+      return new Future.error(e);
+    }
+  }
+
+  @override
+  Future<bool> getLayerVisibility(String layerId) async {
+    try {
+      return await _channel.invokeMethod('style#getLayerVisibility', <String, Object>{
+        'layerId': layerId
+      });
+    } on PlatformException catch (e) {
+      return new Future.error(e);
+    }
+  }
+
+  @override
   Future<LatLng> toLatLng(Point screenLocation) async {
     try {
       var latLngMap = await _channel
